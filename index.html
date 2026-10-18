@@ -1,15 +1,72 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>قلعة طارق - خريطة العالم</title><style>body{margin:0;background:#050a05;color:#fff;text-align:center;padding:10px} .view{display:none} .view.active{display:block} img{width:100%;max-width:480px;border-radius:20px;border:3px solid #2e8b57} .btn{padding:12px 18px;background:linear-gradient(90deg,#2e8b57,#1a7a1a);color:#fff;border:2px solid #7aff7a;border-radius:12px;font-weight:900;margin:4px} .nav{background:#0a1a0a;padding:10px;border-radius:15px;margin-bottom:10px;display:flex;justify-content:center;gap:5px;flex-wrap:wrap}</style></head><body>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>قلعة طارق - اللعبة الكاملة</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#050a12;color:#fff;font-family:system-ui;text-align:center;padding:0 0 70px}
+.nav{position:sticky;top:0;z-index:100;background:#0a0f1a;padding:8px;display:flex;gap:4px;overflow-x:auto;border-bottom:2px solid #1a2a1a}
+.btn{padding:8px 12px;border-radius:12px;border:2px solid #2e8b57;background:linear-gradient(90deg,#1a5a2a,#0f3a1a);color:#fff;font-weight:900;font-size:12px;white-space:nowrap;cursor:pointer}
+.btn.active{background:linear-gradient(90deg,#c9a44a,#8a6a1a);border-color:#ffdd57;color:#000}
+.view{display:none;padding:10px} .view.active{display:block}
+img.main{width:100%;max-width:500px;border-radius:18px;border:3px solid #2e8b57}
+.header{display:flex;justify-content:space-between;align-items:center;background:#111;padding:8px 12px;border-bottom:2px solid #333;font-size:12px}
+.tabs{display:flex;gap:5px;padding:8px;background:#0f0f23;overflow-x:auto}
+.tab{padding:6px 12px;border-radius:20px;border:1px solid #444;background:#1a1a33;font-size:12px;white-space:nowrap}
+.tab.active{background:linear-gradient(90deg,#c9a44a,#8a6a1a);color:#000;font-weight:900}
+.rarity{padding:10px 12px;font-weight:900;font-size:13px;text-align:left}
+.gold{color:#ffdd57} .purple{color:#c87aff} .blue{color:#5ac8ff}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:0 6px}
+@media(max-width:600px){.grid{grid-template-columns:repeat(3,1fr)}}
+.card{border-radius:12px;padding:6px 3px;text-align:center;position:relative;min-height:110px;display:flex;flex-direction:column;justify-content:space-between}
+.card.gold-card{background:linear-gradient(180deg,#c9a44a,#5a4010);border:2px solid #ffdd57}
+.card.purple-card{background:linear-gradient(180deg,#8a4acc,#3a1a5a);border:2px solid #c87aff}
+.card.blue-card{background:linear-gradient(180deg,#2a6a9a,#0a2a4a);border:2px solid #5ac8ff}
+.card b{font-size:9px;line-height:1.1;display:block} .card span{font-size:8px;line-height:1} .stars{font-size:10px;color:#ffdd57}
+.icon{font-size:28px;margin:4px 0}
+.city-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:500px;margin:10px auto}
+.city-card{background:linear-gradient(145deg,#1c3320,#0e1f10);border:2px solid #2a5a2a;border-radius:12px;padding:10px;font-size:13px}
+</style>
+</head>
+<body>
+
+<div class="header"><span>👑 قلعة طارق</span><span>💎 12,345 🪙 98,423</span></div>
+
 <div class="nav">
-<button class="btn" onclick="show('outside')">🏰 القلعة</button>
-<button class="btn" onclick="show('inside')">🏘️ المدينة</button>
-<button class="btn" onclick="show('map')" style="background:linear-gradient(90deg,#1e5a8a,#0d3a5a);border-color:#5ac8ff">🗺️ خريطة العالم</button>
+<button class="btn active" id="b-outside" onclick="show('outside')">🏰 القلعة</button>
+<button class="btn" id="b-inside" onclick="show('inside')">🏘️ المدينة</button>
+<button class="btn" id="b-map" onclick="show('map')">🗺️ الخريطة</button>
+<button class="btn" id="b-heroes" onclick="show('heroes')">👑 الأبطال 15</button>
+<button class="btn" id="b-army" onclick="show('army')">⚔️ الجيش</button>
 </div>
 
-<div id="outside" class="view active"><h2 style="color:#7aff7a">🏰 قلعة طارق - الخارج</h2><img src="castle.jpg" onclick="show('inside')"><p>برك للدخول للمدينة</p><button class="btn" onclick="show('inside')">🚪 دخول</button></div>
+<!-- 1. القلعة -->
+<div id="outside" class="view active">
+<h2 style="color:#7aff7a">🏰 قلعة طارق - من الخارج</h2>
+<img class="main" src="castle.jpg" onclick="show('inside')">
+<p>قلعة حمراء بقبة خضراء - برك للدخول</p>
+<button class="btn" onclick="show('inside')">🚪 دخول المدينة</button>
+<button class="btn" onclick="show('map')">🗺️ خريطة الفتح</button>
+</div>
 
-<div id="inside" class="view"><h2 style="color:#7aff7a">🏰 داخل القلعة - المدينة</h2><img src="inside.jpg"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:480px;margin:10px auto"><div style="background:#1a2f1a;border:2px solid #2a5a2a;border-radius:12px;padding:8px">🕌 قصر الخلافة Lv24</div><div style="background:#1a2f1a;border:2px solid #2a5a2a;border-radius:12px;padding:8px">🛡️ الثكنة Lv20</div><div style="background:#1a2f1a;border:2px solid #2a5a2a;border-radius:12px;padding:8px">📚 بيت الحكمة Lv19</div><div style="background:#1a2f1a;border:2px solid #2a5a2a;border-radius:12px;padding:8px">🏪 السوق Lv18</div><div style="background:#1a2f1a;border:2px solid #2a5a2a;border-radius:12px;padding:8px">🏥 المارستان Lv17</div><div style="background:#1a2f1a;border:2px solid #2a5a2a;border-radius:12px;padding:8px">🐴 الإسطبل Lv15</div></div><button class="btn" onclick="show('outside')">🚪 خروج</button> <button class="btn" onclick="show('map')" style="background:#1e5a8a">🗺️ خريطة الفتح</button></div>
+<!-- 2. المدينة -->
+<div id="inside" class="view">
+<h2 style="color:#7aff7a">🏰 داخل القلعة</h2>
+<img class="main" src="inside.jpg">
+<div class="city-grid">
+<div class="city-card">🕌 قصر الخلافة<br>Lv24</div>
+<div class="city-card">🛡️ الثكنة<br>Lv20</div>
+<div class="city-card">📚 بيت الحكمة<br>Lv19</div>
+<div class="city-card">🏪 السوق<br>Lv18</div>
+<div class="city-card">🏥 المارستان<br>Lv17</div>
+<div class="city-card">🐴 الإسطبل<br>Lv15</div>
+</div>
+<button class="btn" onclick="show('outside')">🚪 خروج</button>
+<button class="btn" onclick="show('heroes')">👑 الأبطال</button>
+</div>
 
-<div id="map" class="view"><h2 style="color:#5ac8ff">🗺️ خريطة فتح الأندلس - 711م</h2><img src="map.jpg"><p style="background:#0a1a0a;padding:10px;border-radius:10px;margin:10px auto;max-width:480px">📜 <b>رحلة طارق بن زياد:</b><br>من طنجة (المغرب) → عبر البحر المتوسط → إلى جبل طارق (إسبانيا)<br><br>🏰 طنجة 711م: معسكر المسلمين<br>⛵ البحر: 7 سفن براية التوحيد<br>🏰 جبل طارق: أول قلعة إسلامية في الأندلس<br>⚔️ الهدف: فتح الأندلس للإسلام</p><button class="btn" onclick="show('outside')">🏰 رجوع للقلعة</button> <button class="btn" onclick="show('inside')">🏘️ المدينة</button></div>
-
-<script>function show(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}</script>
-</body></html>
+<!-- 3. الخريطة -->
+<div id="map" class="view">
+<h2 style
