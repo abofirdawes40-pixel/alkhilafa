@@ -1,38 +1,15 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>قلعة طارق - داخل وخارج</title><style>body{margin:0;background:#050a05;color:#fff;font-family:Cairo;text-align:center;padding:10px} .view{display:none} .view.active{display:block} img{width:100%;max-width:450px;border-radius:20px;border:3px solid #2e8b57;cursor:pointer} .btn{padding:12px 20px;background:linear-gradient(90deg,#2e8b57,#1a7a1a);color:#fff;border:2px solid #7aff7a;border-radius:12px;font-weight:900;margin:5px;cursor:pointer} .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:450px;margin:10px auto} .card{background:#1a2f1a;border:2px solid #2a5a2a;border-radius:15px;padding:8px}</style></head><body>
-<!-- الواجهة الخارجية -->
-<div id="outside" class="view active">
-<h2 style="color:#7aff7a">🏰 قلعة طارق بن زياد - الخارج 🏰</h2>
-<img src="castle.jpg" onclick="enterCastle()" title="برك للدخول للقلعة">
-<p>👆 برك على القلعة للدخول للداخل</p>
-<button class="btn" onclick="enterCastle()">🚪 دخول القلعة</button>
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>قلعة طارق - خريطة العالم</title><style>body{margin:0;background:#050a05;color:#fff;text-align:center;padding:10px} .view{display:none} .view.active{display:block} img{width:100%;max-width:480px;border-radius:20px;border:3px solid #2e8b57} .btn{padding:12px 18px;background:linear-gradient(90deg,#2e8b57,#1a7a1a);color:#fff;border:2px solid #7aff7a;border-radius:12px;font-weight:900;margin:4px} .nav{background:#0a1a0a;padding:10px;border-radius:15px;margin-bottom:10px;display:flex;justify-content:center;gap:5px;flex-wrap:wrap}</style></head><body>
+<div class="nav">
+<button class="btn" onclick="show('outside')">🏰 القلعة</button>
+<button class="btn" onclick="show('inside')">🏘️ المدينة</button>
+<button class="btn" onclick="show('map')" style="background:linear-gradient(90deg,#1e5a8a,#0d3a5a);border-color:#5ac8ff">🗺️ خريطة العالم</button>
 </div>
 
-<!-- الواجهة الداخلية -->
-<div id="inside" class="view">
-<h2 style="color:#7aff7a">🏰 داخل قلعة طارق - المدينة المصغرة 🏰</h2>
-<img src="inside.jpg" usemap="#buildings">
-<map name="buildings">
-<area shape="rect" coords="100,20,350,200" onclick="openBuilding('قصر الخلافة Lv24 - قلب الدولة! 👑')" title="قصر الخلافة">
-<area shape="rect" coords="20,200,180,350" onclick="openBuilding('الثكنة Lv20 - تدريب المجاهدين! 🛡️')" title="الثكنة">
-<area shape="rect" coords="20,350,180,500" onclick="openBuilding('الإسطبل Lv15 - الخيول العربية! 🐴')" title="الإسطبل">
-<area shape="rect" coords="300,200,450,350" onclick="openBuilding('بيت الحكمة Lv19 - العلوم والكتب! 📚')" title="بيت الحكمة">
-<area shape="rect" coords="300,350,450,500" onclick="openBuilding('المارستان Lv17 - علاج الجنود! 🏥')" title="المارستان">
-<area shape="rect" coords="180,250,300,450" onclick="openBuilding('السوق Lv18 - التجارة والذهب! 🏪')" title="السوق">
-</map>
-<div class="grid">
-<div class="card" onclick="openBuilding('قصر الخلافة')"><b>🕌 قصر الخلافة Lv24</b><br><button class="btn">إدارة</button></div>
-<div class="card" onclick="openBuilding('الثكنة')"><b>🛡️ الثكنة Lv20</b><br><button class="btn">تدريب</button></div>
-<div class="card" onclick="openBuilding('بيت الحكمة')"><b>📚 بيت الحكمة Lv19</b><br><button class="btn">بحث</button></div>
-<div class="card" onclick="openBuilding('السوق')"><b>🏪 السوق Lv18</b><br><button class="btn">جمع</button></div>
-<div class="card" onclick="openBuilding('المارستان')"><b>🏥 المارستان Lv17</b><br><button class="btn">علاج</button></div>
-<div class="card" onclick="openBuilding('الإسطبل')"><b>🐴 الإسطبل Lv15</b><br><button class="btn">تربية</button></div>
-</div>
-<button class="btn" onclick="exitCastle()" style="background:linear-gradient(90deg,#8B0000,#5a0000)">🚪 خروج من القلعة</button>
-</div>
+<div id="outside" class="view active"><h2 style="color:#7aff7a">🏰 قلعة طارق - الخارج</h2><img src="castle.jpg" onclick="show('inside')"><p>برك للدخول للمدينة</p><button class="btn" onclick="show('inside')">🚪 دخول</button></div>
 
-<script>
-function enterCastle(){document.getElementById('outside').classList.remove('active');document.getElementById('inside').classList.add('active');window.scrollTo(0,0)}
-function exitCastle(){document.getElementById('inside').classList.remove('active');document.getElementById('outside').classList.add('active');window.scrollTo(0,0)}
-function openBuilding(name){alert('🏰 '+name+'\n\n✨ تم فتح المبنى! ✨\n\nهنا غادي تكون إدارة المبنى، الترقيات، والجنود!')}
-</script>
+<div id="inside" class="view"><h2 style="color:#7aff7a">🏰 داخل القلعة - المدينة</h2><img src="inside.jpg"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:480px;margin:10px auto"><div style="background:#1a2f1a;border:2px solid #2a5a2a;border-radius:12px;padding:8px">🕌 قصر الخلافة Lv24</div><div style="background:#1a2f1a;border:2px solid #2a5a2a;border-radius:12px;padding:8px">🛡️ الثكنة Lv20</div><div style="background:#1a2f1a;border:2px solid #2a5a2a;border-radius:12px;padding:8px">📚 بيت الحكمة Lv19</div><div style="background:#1a2f1a;border:2px solid #2a5a2a;border-radius:12px;padding:8px">🏪 السوق Lv18</div><div style="background:#1a2f1a;border:2px solid #2a5a2a;border-radius:12px;padding:8px">🏥 المارستان Lv17</div><div style="background:#1a2f1a;border:2px solid #2a5a2a;border-radius:12px;padding:8px">🐴 الإسطبل Lv15</div></div><button class="btn" onclick="show('outside')">🚪 خروج</button> <button class="btn" onclick="show('map')" style="background:#1e5a8a">🗺️ خريطة الفتح</button></div>
+
+<div id="map" class="view"><h2 style="color:#5ac8ff">🗺️ خريطة فتح الأندلس - 711م</h2><img src="map.jpg"><p style="background:#0a1a0a;padding:10px;border-radius:10px;margin:10px auto;max-width:480px">📜 <b>رحلة طارق بن زياد:</b><br>من طنجة (المغرب) → عبر البحر المتوسط → إلى جبل طارق (إسبانيا)<br><br>🏰 طنجة 711م: معسكر المسلمين<br>⛵ البحر: 7 سفن براية التوحيد<br>🏰 جبل طارق: أول قلعة إسلامية في الأندلس<br>⚔️ الهدف: فتح الأندلس للإسلام</p><button class="btn" onclick="show('outside')">🏰 رجوع للقلعة</button> <button class="btn" onclick="show('inside')">🏘️ المدينة</button></div>
+
+<script>function show(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}</script>
 </body></html>
