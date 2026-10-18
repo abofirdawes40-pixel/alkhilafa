@@ -3,121 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>عرش الخلافة - 2.5D</title>
+<title>عرش الخلافة - المدينة الكاملة</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap');
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
-body{background:#0a1430;overflow:hidden;height:100vh;display:flex;flex-direction:column}
-#top{padding:8px 12px;background:#111a3a;display:flex;justify-content:space-between;align-items:center;font-size:13px;z-index:10}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo'}
+body{background:#0a1430;overflow:hidden;height:100vh;display:flex;flex-direction:column;color:#fff}
+#top{padding:6px 10px;background:#111a3a;display:flex;justify-content:space-between;font-size:11px;z-index:20}
 #canvas{flex:1;position:relative}
-#bottom{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,#0a1430 30%);padding:10px;z-index:10;pointer-events:none}
-.stats{display:flex;gap:8px;justify-content:center;margin-bottom:8px;pointer-events:auto}
-.stat{background:#1a2a5aee;padding:6px 14px;border-radius:20px;font-size:12px;border:1px solid #ffffff22}
-.controls{display:flex;gap:8px;pointer-events:auto}
-.btn{flex:1;padding:16px 5px;border-radius:16px;text-align:center;font-weight:900;font-size:15px;cursor:pointer;border:none;box-shadow:0 4px 0 rgba(0,0,0,0.4);transition:0.1s}
-.btn:active{transform:translateY(3px);box-shadow:none}
-#b1{background:linear-gradient(#ffcc33,#ff9900);color:#3d2200}
-#b2{background:linear-gradient(#22ff88,#1abb5a);color:#003311}
-#b3{background:linear-gradient(#ff5555,#cc2222);color:#fff}
-#cityInfo{position:absolute;top:10px;left:50%;transform:translateX(-50%);background:#000c;padding:8px 18px;border-radius:20px;font-size:13px;z-index:10;pointer-events:none}
-#rotateHint{position:absolute;top:50px;left:50%;transform:translateX(-50%);background:#ffffff11;padding:5px 12px;border-radius:15px;font-size:11px;color:#aaccff;z-index:10}
-</style>
-</head>
-<body>
-<div id="top"><span>🏰 عرش الخلافة 2.5D</span><span id="online">🟢 1 لاعب</span><span>📍 <b id="current">طنجة</b></span></div>
-<div id="canvas">
-<div id="cityInfo">اختر مدينة للتحرك - اسحب الشاشة لتدوير الخريطة 🔄</div>
-<div id="rotateHint">👆 اسحب يمين/يسار لتدوير 360°</div>
-<div id="bottom">
-<div class="stats">
-<div class="stat">⭐ المستوى <b id="lvl">1</b></div>
-<div class="stat">💎 <b id="gold">800</b></div>
-<div class="stat">🪖 <b id="sold">15</b></div>
-<div class="stat">🏆 <b id="pts">0</b></div>
-</div>
-<div class="controls">
-<button id="b3" class="btn" onclick="game.attack()">⚔️ هجوم</button>
-<button id="b2" class="btn" onclick="game.collect()">💎 جمع</button>
-<button id="b1" class="btn" onclick="game.enter()">🏰 دخول</button>
-</div>
-</div>
-</div>
-<script>
-const game = {
- gold:800, sold:15, pts:0, lvl:1, current:'طنجة',
- cities:{
-  'طنجة':{x:-4,z:-4,color:0x22ff88,type:'عاصمة'},
-  'سبتة':{x:4,z:-4,color:0xff4444,type:'عدو'},
-  'طليطلة':{x:-4,z:0,color:0xffaa00,type:'محايد'},
-  'المضيق':{x:4,z:0,color:0x44ddff,type:'مضيق'},
-  'إشبيلية':{x:-4,z:4,color:0xffaa00,type:'محايد'},
-  'غرناطة':{x:0,z:6,color:0xaa88ff,type:'هدف'},
-  'قرطبة':{x:4,z:4,color:0xffaa00,type:'محايد'},
- },
- init3D(){
-  this.scene=new THREE.Scene(); this.scene.background=new THREE.Color(0x0a1430);
-  this.camera=new THREE.PerspectiveCamera(45, innerWidth/innerHeight, 0.1, 100);
-  this.camera.position.set(10,10,10); this.camera.lookAt(0,0,0);
-  this.renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
-  this.renderer.setSize(innerWidth,innerHeight); document.getElementById('canvas').prepend(this.renderer.domElement);
-  this.renderer.domElement.style.touchAction='none';
-  this.scene.add(new THREE.AmbientLight(0xffffff,0.8));
-  const dir=new THREE.DirectionalLight(0xffffff,0.6); dir.position.set(5,10,5); this.scene.add(dir);
-  // أرضية 2.5D
-  const ground=new THREE.Mesh(new THREE.PlaneGeometry(20,20), new THREE.MeshStandardMaterial({color:0x12326a}));
-  ground.rotation.x=-Math.PI/2; ground.position.y=-0.5; this.scene.add(ground);
-  // بحر
-  const sea=new THREE.Mesh(new THREE.PlaneGeometry(20,4), new THREE.MeshStandardMaterial({color:0x0e4a8a,transparent:true,opacity:0.6}));
-  sea.rotation.x=-Math.PI/2; sea.position.set(0,-0.4, -12); this.scene.add(sea);
-  this.cityMeshes={};
-  for(let name in this.cities){
-   let d=this.cities[name];
-   let group=new THREE.Group();
-   let base=new THREE.Mesh(new THREE.BoxGeometry(1.8,0.3,1.8), new THREE.MeshStandardMaterial({color:0x333344}));
-   base.position.y=0; group.add(base);
-   let building=new THREE.Mesh(new THREE.BoxGeometry(1.2,1.5,1.2), new THREE.MeshStandardMaterial({color:d.color}));
-   building.position.y=0.9; group.add(building);
-   let roof=new THREE.Mesh(new THREE.ConeGeometry(0.9,0.6,4), new THREE.MeshStandardMaterial({color:0xffcc33}));
-   roof.position.y=1.9; roof.rotation.y=Math.PI/4; group.add(roof);
-   group.position.set(d.x,0,d.z); group.userData.name=name;
-   this.scene.add(group); this.cityMeshes[name]=group;
-  }
-  this.select('طنجة');
-  // تدوير 360° بالسحب
-  let startX=0, rot=0.8, isDown=false;
-  this.renderer.domElement.addEventListener('touchstart',e=>{isDown=true; startX=e.touches[0].clientX});
-  this.renderer.domElement.addEventListener('touchmove',e=>{if(!isDown)return; let dx=e.touches[0].clientX-startX; rot+=dx*0.01; startX=e.touches[0].clientX;});
-  this.renderer.domElement.addEventListener('touchend',()=>isDown=false);
-  this.renderer.domElement.addEventListener('mousedown',e=>{isDown=true; startX=e.clientX});
-  this.renderer.domElement.addEventListener('mousemove',e=>{if(!isDown)return; let dx=e.clientX-startX; rot+=dx*0.01; startX=e.clientX;});
-  this.renderer.domElement.addEventListener('mouseup',()=>isDown=false);
-  this.renderer.domElement.addEventListener('click',e=>this.onClick(e));
-  const animate=()=>{
-   requestAnimationFrame(animate);
-   let r=12; this.camera.position.x=Math.cos(rot)*r; this.camera.position.z=Math.sin(rot)*r; this.camera.position.y=9;
-   this.camera.lookAt(0,0,0);
-   // مدينة مختارة كتبرق
-   for(let n in this.cityMeshes){ let m=this.cityMeshes[n]; m.scale.set(1,1,1); }
-   if(this.cityMeshes[this.current]){ let s=1+Math.sin(Date.now()*0.005)*0.1; this.cityMeshes[this.current].scale.set(s,s,s); }
-   this.renderer.render(this.scene,this.camera);
-  }; animate();
-  window.addEventListener('resize',()=>{this.camera.aspect=innerWidth/innerHeight; this.camera.updateProjectionMatrix(); this.renderer.setSize(innerWidth,innerHeight);});
- },
- onClick(e){
-  const ray=new THREE.Raycaster(); const mouse=new THREE.Vector2();
-  mouse.x=(e.clientX/innerWidth)*2-1; mouse.y=-(e.clientY/innerHeight)*2+1;
-  ray.setFromCamera(mouse,this.camera);
-  let hits=ray.intersectObjects(this.scene.children,true);
-  for(let h of hits){ let obj=h.object; while(obj.parent){ if(obj.userData.name){ this.select(obj.userData.name); return; } obj=obj.parent; } }
- },
- select(name){ this.current=name; document.getElementById('current').innerText=name; let d=this.cities[name]; document.getElementById('cityInfo').innerHTML=`🏰 ${name} - ${d.type} - برك على جمع أو هجوم`; if(navigator.vibrate) navigator.vibrate(30); },
- collect(){ this.gold+=60; this.sold+=2; this.pts+=20; this.update(); document.getElementById('cityInfo').innerHTML=`💎 جمعت من ${this.current} +60 ذهب`; setTimeout(()=>this.select(this.current),1500); },
- attack(){ if(this.sold<5){ alert('❌ خاصك 5 جنود على الأقل!'); return; } this.sold-=5; this.gold+=100; this.pts+=80; if(this.pts>this.lvl*200){ this.lvl++; alert('🎉 المستوى '+this.lvl+'!'); } this.update(); document.getElementById('cityInfo').innerHTML=`⚔️ هجوم على ${this.current} ناجح! +100 ذهب`; },
- enter(){ this.pts+=50; this.gold+=40; this.update(); alert(`🏰 دخلت قلعة ${this.current}!\nالمدينة: ${this.cities[this.current].type}\n+50 نقطة`); },
- update(){ document.getElementById('gold').innerText=this.gold; document.getElementById('sold').innerText=this.sold; document.getElementById('pts').innerText=this.pts; document.getElementById('lvl').innerText=this.lvl; }
-};
-game.init3D(); game.update();
-</script>
-</body>
-</html>
+#bottom{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,#0a1430 50%);padding:8px;z-index:20}
+.stats{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin-bottom:6px}
+.stat{background:#1a2a5aee;padding:4px 10px;border-radius:20px;font-size:10px;border:1px solid #fff2}
+.controls{display:flex;gap:5px}
+.btn{flex:1;padding:12px 3px;border-radius:12px;text-align:center;font-weight:900;font-size:12px;cursor:pointer;border:none}
+#b1{background:linear-gradient(#ffcc33,#ff9900);color:#3d2200}#b2{background:linear-gradient(#22ff88,#1abb5a);color:#003311}#b3{background:linear-gradient(#ff5555,#cc2222);color:#fff}
+#cityInfo{position:absolute;top:6px;left:50%;transform:translateX(-50%);background:#000c;padding:5px 12px;border-radius:20px;font-size:10px;z-index:15;text-align:center;max-width:90%}
+#interiorUI{position:absolute;top:0;left:0;right:0;bottom:0;background:#0a1430;z-index:30;display:none;flex-direction:column}
+#intTop{padding:8px;background:#111a3a;display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.buildings{flex:1;overflow:auto;padding:8px;display:flex;flex-direction:column;gap:12px}
+.sectionTitle{background:#ffcc3322;padding:6px 12px;border-radius:10px;font-weight:900;font-size:12px;border-right:4px solid #ffcc33;margin-top:4px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.building{background:#1a2a5a;border-radius:14px;padding:10px;text-align:center;border:2px solid #ffffff11;cursor:pointer;position:relative}
+.building:active{transform:scale(0.95)}
+.building .icon{font-size:28px}.building .name{font-weight:900;font-size:11px;margin:3px 0}.building .lvl{font-size:10px;color:#ffcc33}.building .cost{font-size:9px;color:#88ff88;margin-top:2px}
+.count{position:absolute;top:4px;left:4px;background:#ff4444;color:#fff;font-size:9px;padding:1px 5px;border-radius:10px}
+.field{background:linear-gradient(#2a4a1a,#1a3a0a) !important;border-color:#55aa33 !important}
+.fieldWood{background:linear-gradient(#4a2a0a,#3a1a00) !important;border-color:#aa773
