@@ -1,12 +1,38 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>قلعة طارق 2.5D - كاملة</title><style>body{margin:0;background:#050a05;color:#fff;font-family:Cairo;padding:10px}h2{text-align:center;color:#7aff7a;padding:10px} .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:440px;margin:0 auto} .card{background:linear-gradient(145deg,#1c3320,#0e1f10);border:2px solid #2e5a2e;border-radius:18px;overflow:hidden;cursor:pointer;transition:.2s} .card:hover{border-color:#7aff7a;transform:translateY(-3px)} .card.main{grid-column:span 2} .card img{width:100%;height:160px;object-fit:cover;background:#0a1a0a} .card.main img{height:220px} .info{padding:10px;text-align:center} .name{font-size:12px;font-weight:900;color:#c8f0c8} .lvl{background:linear-gradient(90deg,#2e8b57,#1a7a1a);color:#fff;font-size:9px;padding:2px 8px;border-radius:20px;border:1px solid #7aff7a} .btn{width:100%;margin-top:6px;padding:8px;background:linear-gradient(90deg,#2e8b57,#1a7a1a);color:#fff;border:1px solid #7aff7a;border-radius:10px;font-weight:900;font-size:11px}</style></head><body>
-<h2>🏰 قلعة طارق بن زياد 2.5D 🏰</h2>
-<div class="grid">
-<div class="card main" onclick="alert('🕌 قصر الخلافة Lv24 - قلب الدولة!')"><img src="castle.jpg"><div class="info"><div class="name">🕌 قصر الخلافة</div><span class="lvl">Lv24</span><button class="btn">⬆️ ترقية الآن</button></div></div>
-<div class="card" onclick="alert('🛡️ الثكنة Lv20 - تدريب المجاهدين!')"><img src="barracks.jpg"><div class="info"><div class="name">🛡️ الثكنة</div><span class="lvl">Lv20</span><button class="btn">تدريب</button></div></div>
-<div class="card" onclick="alert('📚 بيت الحكمة Lv19 - العلوم!')"><img src="library.jpg"><div class="info"><div class="name">📚 بيت الحكمة</div><span class="lvl">Lv19</span><button class="btn">بحث</button></div></div>
-<div class="card" onclick="alert('🏪 السوق Lv18 - التجارة!')"><img src="souk.jpg"><div class="info"><div class="name">🏪 السوق</div><span class="lvl">Lv18</span><button class="btn">جمع</button></div></div>
-<div class="card" onclick="alert('🏥 المارستان Lv17 - علاج الجنود!')"><img src="hospital.jpg"><div class="info"><div class="name">🏥 المارستان</div><span class="lvl">Lv17</span><button class="btn">علاج</button></div></div>
-<div class="card" onclick="alert('🐴 الإسطبل Lv15 - الخيول العربية!')"><img src="stable.jpg"><div class="info"><div class="name">🐴 الإسطبل</div><span class="lvl">Lv15</span><button class="btn">تربية</button></div></div>
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>قلعة طارق - داخل وخارج</title><style>body{margin:0;background:#050a05;color:#fff;font-family:Cairo;text-align:center;padding:10px} .view{display:none} .view.active{display:block} img{width:100%;max-width:450px;border-radius:20px;border:3px solid #2e8b57;cursor:pointer} .btn{padding:12px 20px;background:linear-gradient(90deg,#2e8b57,#1a7a1a);color:#fff;border:2px solid #7aff7a;border-radius:12px;font-weight:900;margin:5px;cursor:pointer} .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:450px;margin:10px auto} .card{background:#1a2f1a;border:2px solid #2a5a2a;border-radius:15px;padding:8px}</style></head><body>
+<!-- الواجهة الخارجية -->
+<div id="outside" class="view active">
+<h2 style="color:#7aff7a">🏰 قلعة طارق بن زياد - الخارج 🏰</h2>
+<img src="castle.jpg" onclick="enterCastle()" title="برك للدخول للقلعة">
+<p>👆 برك على القلعة للدخول للداخل</p>
+<button class="btn" onclick="enterCastle()">🚪 دخول القلعة</button>
 </div>
-<p style="text-align:center;color:#7aff7a;margin-top:15px">✅ مدينة إسلامية 2.5D كاملة - طنجة 711م</p>
+
+<!-- الواجهة الداخلية -->
+<div id="inside" class="view">
+<h2 style="color:#7aff7a">🏰 داخل قلعة طارق - المدينة المصغرة 🏰</h2>
+<img src="inside.jpg" usemap="#buildings">
+<map name="buildings">
+<area shape="rect" coords="100,20,350,200" onclick="openBuilding('قصر الخلافة Lv24 - قلب الدولة! 👑')" title="قصر الخلافة">
+<area shape="rect" coords="20,200,180,350" onclick="openBuilding('الثكنة Lv20 - تدريب المجاهدين! 🛡️')" title="الثكنة">
+<area shape="rect" coords="20,350,180,500" onclick="openBuilding('الإسطبل Lv15 - الخيول العربية! 🐴')" title="الإسطبل">
+<area shape="rect" coords="300,200,450,350" onclick="openBuilding('بيت الحكمة Lv19 - العلوم والكتب! 📚')" title="بيت الحكمة">
+<area shape="rect" coords="300,350,450,500" onclick="openBuilding('المارستان Lv17 - علاج الجنود! 🏥')" title="المارستان">
+<area shape="rect" coords="180,250,300,450" onclick="openBuilding('السوق Lv18 - التجارة والذهب! 🏪')" title="السوق">
+</map>
+<div class="grid">
+<div class="card" onclick="openBuilding('قصر الخلافة')"><b>🕌 قصر الخلافة Lv24</b><br><button class="btn">إدارة</button></div>
+<div class="card" onclick="openBuilding('الثكنة')"><b>🛡️ الثكنة Lv20</b><br><button class="btn">تدريب</button></div>
+<div class="card" onclick="openBuilding('بيت الحكمة')"><b>📚 بيت الحكمة Lv19</b><br><button class="btn">بحث</button></div>
+<div class="card" onclick="openBuilding('السوق')"><b>🏪 السوق Lv18</b><br><button class="btn">جمع</button></div>
+<div class="card" onclick="openBuilding('المارستان')"><b>🏥 المارستان Lv17</b><br><button class="btn">علاج</button></div>
+<div class="card" onclick="openBuilding('الإسطبل')"><b>🐴 الإسطبل Lv15</b><br><button class="btn">تربية</button></div>
+</div>
+<button class="btn" onclick="exitCastle()" style="background:linear-gradient(90deg,#8B0000,#5a0000)">🚪 خروج من القلعة</button>
+</div>
+
+<script>
+function enterCastle(){document.getElementById('outside').classList.remove('active');document.getElementById('inside').classList.add('active');window.scrollTo(0,0)}
+function exitCastle(){document.getElementById('inside').classList.remove('active');document.getElementById('outside').classList.add('active');window.scrollTo(0,0)}
+function openBuilding(name){alert('🏰 '+name+'\n\n✨ تم فتح المبنى! ✨\n\nهنا غادي تكون إدارة المبنى، الترقيات، والجنود!')}
+</script>
 </body></html>
