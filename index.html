@@ -5,44 +5,83 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>طارق - فتح الأندلس ⚔️</title>
 <style>
-body{margin:0;background:#0f172a;color:#fff;font-family:system-ui;text-align:center;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
-h1{font-size:2.5rem;margin:10px;color:#fbbf24;text-shadow:0 0 20px #f59e0b}
-.card{background:#1e293b;padding:30px;border-radius:20px;box-shadow:0 10px 30px #0008;max-width:350px;width:90%}
-button{background:#f59e0b;color:#000;border:none;padding:15px 30px;font-size:1.3rem;border-radius:12px;font-weight:bold;cursor:pointer;margin-top:20px;width:100%}
-button:active{transform:scale(0.95)}
-#game{display:none}
-.grid{display:grid;grid-template-columns:repeat(3,80px);gap:10px;justify-content:center;margin:20px 0}
-.cell{width:80px;height:80px;background:#334155;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:2rem;cursor:pointer}
-.score{font-size:1.2rem;margin:10px;color:#94a3b8}
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Cairo',sans-serif;background:#0f0e0b;color:#e8dcc6}
+header{background:linear-gradient(90deg,#1a1207,#3c2a14);padding:10px;border-bottom:3px solid #c9a86a;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center}
+.logo{font-size:18px;font-weight:700;color:#f5d89a}
+.res-bar{display:flex;gap:6px;flex-wrap:wrap}
+.res{background:#2a2010;border:1px solid #8c6a3a;border-radius:12px;padding:4px 10px;font-size:12px}
+.res b{color:#ffd57a}
+.castle-stage{text-align:center;padding:18px;background:radial-gradient(circle at center,#2d2412,#0f0e0b);border-bottom:2px solid #4a3720}
+.castle-visual{font-size:100px;transition:all 0.8s ease;filter:drop-shadow(0 0 20px #c9a86a)}
+.level-bar{width:80%;max-width:400px;height:18px;background:#1a1207;border:1px solid #8c6a3a;border-radius:10px;margin:10px auto;overflow:hidden}
+.level-fill{height:100%;background:linear-gradient(90deg,#c9a86a,#ffd57a);transition:width 0.5s}
+.btn{padding:8px 14px;border-radius:10px;border:1px solid #c9a86a;background:linear-gradient(#3c2a14,#1a1207);color:#f5d89a;cursor:pointer;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;padding:14px}
+.card{background:linear-gradient(145deg,#211a0f,#17120c);border:1px solid #5a4528;border-radius:14px;padding:10px;position:relative}
+.card .icon{font-size:32px;text-align:center;margin:6px 0}
+.card .lvl{position:absolute;top:6px;left:8px;background:#c9a86a;color:#1a1207;font-size:10px;padding:2px 6px;border-radius:8px;font-weight:700}
+.section-title{padding:10px 14px 0;font-size:16px;color:#f5d89a;border-top:1px solid #3a2c16;margin-top:10px}
+.souk-item{display:flex;justify-content:space-between;background:#211a0f;border:1px solid #4a3720;padding:8px;border-radius:10px;margin:6px 12px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1a1207;border:1px solid #c9a86a;padding:10px 18px;border-radius:12px;color:#ffd57a;z-index:999;display:none}
 </style>
 </head>
 <body>
-<div id="menu" class="card">
-<h1>⚔️ طارق<br>فتح الأندلس</h1>
-<p>قُد جيش طارق بن زياد و افتح المدن!</p>
-<div class="score">الفتوحات: <span id="wins">0</span></div>
-<button onclick="startGame()">ابدأ الفتح 🚀</button>
+<header>
+<div class="logo">⚔️ طارق - فتح الأندلس - Lv <span id="castleLevelText">1</span></div>
+<div class="res-bar">
+<div class="res">🌾 <b id="food">500</b></div>
+<div class="res">🪵 <b id="wood">500</b></div>
+<div class="res">⛏️ <b id="iron">300</b></div>
+<div class="res">🔮 <b id="crystal">100</b></div>
+<div class="res">⭐ <b id="xp">0</b>/100</div>
 </div>
-
-<div id="game" class="card">
-<h2>معركة طريف ⚔️</h2>
-<div class="score">دورك: <span id="turn">⚔️</span></div>
-<div class="grid" id="grid"></div>
-<button onclick="resetGame()">إعادة المعركة</button>
-<button onclick="showMenu()" style="background:#334155;color:#fff">القائمة</button>
+</header>
+<div class="castle-stage">
+<div class="castle-visual" id="castleVisual">🏚️</div>
+<h2 id="castleName" style="color:#f5d89a;font-size:18px;margin-top:8px">كوخ خشبي - المستوى 1</h2>
+<div class="level-bar"><div class="level-fill" id="levelFill" style="width:5%"></div></div>
+<div style="font-size:12px">التطور القادم كل 5 مستويات - القادم: Lv <span id="nextEvo">5</span></div><br>
+<button class="btn" onclick="upgradeCastle()">⬆️ ترقية القلعة (🌾200 🪵200 ⛏️100)</button>
 </div>
-
+<div class="section-title">🏰 مباني داخل القلعة</div>
+<div class="grid" id="innerGrid"></div>
+<div class="section-title">🌾 موارد خارجية - إنتاج كل ثانية</div>
+<div class="grid" id="resourceGrid"></div>
+<div class="section-title">🛒 السوق</div>
+<div id="souk"></div>
+<div class="section-title">⚔️ التحالف والأبطال</div>
+<div class="grid">
+<div class="card"><div class="icon">🤝</div><h3>إدارة التحالف</h3><p style="font-size:11px">كون تحالف - حروب مشتركة</p><button class="btn" onclick="toast('قريبا: نظام التحالفات!')">فتح</button></div>
+<div class="card"><div class="icon">☕⚔️</div><h3>مقهى الأبطال</h3><p style="font-size:11px">جند طارق بن زياد وموسى بن نصير</p><button class="btn" onclick="recruitHero()">تجنيد (🔮50)</button><div id="heroesList" style="font-size:11px;margin-top:6px;color:#ffd57a"></div></div>
+</div>
+<div class="toast" id="toast"></div>
 <script>
-let board=["","","","","","","","",""];
-let current="X";
-let wins=parseInt(localStorage.getItem("tariq_wins")||0);
-document.getElementById("wins").innerText=wins;
-function startGame(){document.getElementById("menu").style.display="none";document.getElementById("game").style.display="block";createGrid()}
-function showMenu(){document.getElementById("game").style.display="none";document.getElementById("menu").style.display="block";}
-function createGrid(){const g=document.getElementById("grid");g.innerHTML="";board=["","","","","","","","",""];for(let i=0;i<9;i++){const d=document.createElement("div");d.className="cell";d.onclick=()=>move(i,d);g.appendChild(d)}}
-function move(i,el){if(board[i]!==""||checkWin())return;board[i]=current;el.innerText=current==="X"?"⚔️":"🛡️";if(checkWin()){wins++;localStorage.setItem("tariq_wins",wins);document.getElementById("wins").innerText=wins;setTimeout(()=>{alert("الله أكبر! تم الفتح ⚔️🔥");createGrid()},200)}else if(board.every(c=>c!=="")){setTimeout(()=>{alert("تعادل! استعد للمعركة");createGrid()},200)}else{current=current==="X"?"O":"X";document.getElementById("turn").innerText=current==="X"?"⚔️":"🛡️"}}
-function checkWin(){const w=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];return w.some(a=>board[a[0]]&&board[a[0]]===board[a[1]]&&board[a[0]]===board[a[2]])}
-function resetGame(){createGrid()}
+let state=JSON.parse(localStorage.getItem('tariq_save')||'null')||{level:1,xp:0,food:500,wood:500,iron:300,crystal:100,buildings:{},heroes:[]};
+const castleStages=[{lv:1,icon:'🏚️',name:'كوخ خشبي'},{lv:5,icon:'🛖',name:'قرية محصنة'},{lv:10,icon:'🏠',name:'قلعة صغيرة'},{lv:15,icon:'🏡',name:'قلعة متوسطة'},{lv:20,icon:'🏰',name:'قلعة حجرية'},{lv:25,icon:'🏰✨',name:'قلعة مزخرفة'},{lv:30,icon:'🏯',name:'حصن أندلسي'},{lv:35,icon:'🏯🌙',name:'حصن إسلامي'},{lv:40,icon:'🏰🕌',name:'قلعة الخلافة'},{lv:45,icon:'🕌🏰',name:'قصر الخلافة'},{lv:50,icon:'🕌✨🏰',name:'قصر قرطبة'},{lv:55,icon:'🏰👑',name:'قلعة الملوك'},{lv:60,icon:'🏰⚔️',name:'قلعة الفتوحات'},{lv:65,icon:'🏰🔥',name:'قلعة لا تقهر'},{lv:70,icon:'🏰🌟',name:'قلعة أسطورية'},{lv:75,icon:'🕌🌟🏰',name:'جوهرة الأندلس'},{lv:80,icon:'🏰💎',name:'القلعة الماسية'},{lv:85,icon:'🏰☄️',name:'قلعة السماء'},{lv:90,icon:'🕌👑✨',name:'عاصمة الخلافة'},{lv:95,icon:'🏰🌙⭐',name:'قلعة الخلود'},{lv:100,icon:'🌟🕌👑🏰🌟',name:'قلعة طارق العظمى'}];
+const innerBuildings=[{id:'barracks',name:'تكنة',icon:'⚔️',desc:'تدريب الجنود'},{id:'hospital',name:'مشفى',icon:'🏥',desc:'علاج الجرحى'},{id:'academy',name:'أكاديمية',icon:'📚',desc:'بحث تقنيات'},{id:'wall',name:'سور',icon:'🧱',desc:'دفاع القلعة'},{id:'tower1',name:'برج مراقبة 1',icon:'🗼',desc:'كشف الأعداء'},{id:'tower2',name:'برج مراقبة 2',icon:'🗼',desc:'دفاع بعيد'},{id:'arena',name:'حلبة',icon:'🏟️',desc:'تدريب الأبطال'},{id:'trap',name:'ورشة الفخاخ',icon:'🪤',desc:'فخاخ دفاعية'}];
+const resourceDefs=[{id:'food',name:'حقل طعام',icon:'🌾',res:'food',count:4},{id:'wood',name:'منشرة خشب',icon:'🪵',res:'wood',count:4},{id:'iron',name:'منجم حديد',icon:'⛏️',res:'iron',count:4},{id:'crystal',name:'منجم بلور',icon:'🔮',res:'crystal',count:4}];
+function getCastleStage(lv){let cur=castleStages[0];for(let s of castleStages){if(lv>=s.lv)cur=s;}return cur;}
+function renderCastle(){const st=getCastleStage(state.level);document.getElementById('castleVisual').textContent=st.icon;document.getElementById('castleName').textContent=st.name+' - المستوى '+state.level;document.getElementById('castleLevelText').textContent=state.level;document.getElementById('levelFill').style.width=state.level+'%';let next=castleStages.find(s=>s.lv>state.level);document.getElementById('nextEvo').textContent=next?next.lv:100;let scale=1+state.level*0.008;document.getElementById('castleVisual').style.transform=`scale(${scale})`;}
+function costBuilding(bLv){return{food:50+bLv*25,wood:50+bLv*20,iron:20+bLv*12,crystal:(bLv>5?5+bLv*2:0)};}
+function costFor(l){return{food:100+l*40,wood:100+l*35,iron:50+l*20};}
+function canAfford(c){return state.food>=c.food&&state.wood>=c.wood&&state.iron>=(c.iron||0)&&state.crystal>=(c.crystal||0);}
+function pay(c){state.food-=c.food;state.wood-=c.wood;state.iron-=(c.iron||0);state.crystal-=(c.crystal||0);}
+function renderBuildings(){const grid=document.getElementById('innerGrid');grid.innerHTML='';innerBuildings.forEach(b=>{let lv=state.buildings[b.id]||0;let cost=costBuilding(lv);grid.innerHTML+=`<div class="card"><div class="lvl">Lv ${lv}</div><div class="icon">${b.icon}</div><h3>${b.name}</h3><p style="font-size:11px">${b.desc}</p><p style="color:#8c6a3a;font-size:11px">🌾${cost.food} 🪵${cost.wood} ⛏️${cost.iron} ${cost.crystal?'🔮'+cost.crystal:''}</p><button class="btn" onclick="upgrade('${b.id}')">ترقية ⬆️</button></div>`;});}
+function renderResources(){const grid=document.getElementById('resourceGrid');grid.innerHTML='';resourceDefs.forEach(def=>{for(let i=1;i<=def.count;i++){let key=def.id+'_'+i;let lv=state.buildings[key]||0;let cost=costBuilding(lv);grid.innerHTML+=`<div class="card"><div class="lvl">Lv ${lv}</div><div class="icon">${def.icon}</div><h3>${def.name} ${i}</h3><p style="font-size:11px">إنتاج +${(lv*2+1)}/ث</p><p style="color:#8c6a3a;font-size:11px">🌾${cost.food} 🪵${cost.wood} ⛏️${cost.iron}</p><button class="btn" onclick="upgrade('${key}')">ترقية</button></div>`;}});}
+function renderSouk(){document.getElementById('souk').innerHTML=`<div class="souk-item"><span>🪵100 مقابل 🌾120</span><button class="btn" onclick="trade('food','wood')">تبادل</button></div><div class="souk-item"><span>⛏️50 مقابل 🪵100</span><button class="btn" onclick="trade('wood','iron')">تبادل</button></div><div class="souk-item"><span>🔮20 مقابل ⛏️150+🌾100</span><button class="btn" onclick="trade('mix','crystal')">تبادل</button></div><div class="souk-item"><span>📦 صندوق XP +50 - 🔮20</span><button class="btn" onclick="buyXP()">شراء</button></div>`;}
+function upgradeCastle(){let c=costFor(state.level);if(!canAfford(c)){toast('موارد غير كافية!');return;}if(state.level>=100){toast('أعلى مستوى! 🌟');return;}pay(c);state.level++;state.xp+=20;checkXP();save();renderAll();toast('ترقية القلعة Lv '+state.level+'! 🏰');}
+function upgrade(id){let lv=state.buildings[id]||0;let c=costBuilding(lv);if(!canAfford(c)){toast('موارد غير كافية');return;}pay(c);state.buildings[id]=lv+1;state.xp+=10;checkXP();save();renderAll();toast('ترقية '+id+' Lv '+(lv+1));}
+function checkXP(){if(state.xp>=100){state.xp-=100;if(state.level<100)state.level++;toast('Level Up! 🎉');}}
+function trade(a,b){if(b==='wood'&&state.food>=120){state.food-=120;state.wood+=100;toast('تم!');}else if(b==='iron'&&state.wood>=100){state.wood-=100;state.iron+=50;toast('تم!');}else if(b==='crystal'&&state.iron>=150&&state.food>=100){state.iron-=150;state.food-=100;state.crystal+=20;toast('تم!');}else toast('غير كافي');save();renderAll();}
+function buyXP(){if(state.crystal>=20){state.crystal-=20;state.xp+=50;checkXP();toast('+50 XP');save();renderAll();}else toast('تحتاج بلور');}
+const heroesPool=['طارق بن زياد ⚔️','موسى بن نصير 🦁','عبد الرحمن الداخل 🦅','يوسف بن تاشفين 🐎','صقر قريش 🌙'];
+function recruitHero(){if(state.crystal<50){toast('تحتاج 50 بلور');return;}state.crystal-=50;let h=heroesPool[Math.floor(Math.random()*heroesPool.length)];state.heroes.push(h);toast('تجنيد: '+h);save();renderAll();}
+function toast(msg){let t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2500);}
+function save(){localStorage.setItem('tariq_save',JSON.stringify(state));document.getElementById('food').textContent=state.food;document.getElementById('wood').textContent=state.wood;document.getElementById('iron').textContent=state.iron;document.getElementById('crystal').textContent=state.crystal;document.getElementById('xp').textContent=state.xp;}
+function renderAll(){renderCastle();renderBuildings();renderResources();renderSouk();save();document.getElementById('heroesList').innerHTML=state.heroes.map(h=>'• '+h).join('<br>');}
+renderAll();setInterval(()=>{resourceDefs.forEach(def=>{for(let i=1;i<=def.count;i++){let lv=state.buildings[def.id+'_'+i]||0;if(lv>0){if(def.res==='food')state.food+=lv*2+1;if(def.res==='wood')state.wood+=lv*2+1;if(def.res==='iron')state.iron+=lv+1;if(def.res==='crystal')state.crystal+=Math.floor(lv/2)+1;}}});save();},1000);
 </script>
 </body>
 </html>
