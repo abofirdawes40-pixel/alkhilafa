@@ -1,49 +1,43 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>طارق - 2.5D</title>
-<style>@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap');*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Cairo',sans-serif;background:#000;color:#fff;overflow:hidden;height:100vh}
-header{position:fixed;top:0;left:0;right:0;z-index:1000;background:linear-gradient(90deg,rgba(20,12,5,0.95),rgba(60,40,15,0.95));padding:6px 8px;border-bottom:2px solid #c9a86a;display:flex;justify-content:space-between;height:48px}
-.logo{font-size:12px;font-weight:900;color:#ffd57a}.res-bar{display:flex;gap:3px}.res{background:rgba(42,32,16,0.9);border:1px solid #8c6a3a;border-radius:8px;padding:2px 5px;font-size:9px}.res b{color:#ffd57a}
-.view{position:absolute;top:48px;left:0;right:0;bottom:0;display:none;overflow:hidden}.view.active{display:block}
-.scene-wrap{position:relative;width:100%;height:100%;overflow:auto;cursor:grab;background:#111}.scene-img{display:block;width:1400px;height:auto;min-height:100%}
-.hotspot{position:absolute;border:2px solid transparent;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:10;transition:0.2s}
-.hotspot:hover{border-color:#ffd57a;background:rgba(201,168,106,0.35);box-shadow:0 0 20px #ffd57a;transform:scale(1.08)}
-.hotspot .h-icon{font-size:24px;animation:pulse 1.8s infinite}.hotspot .h-label{font-size:9px;background:rgba(0,0,0,0.9);color:#ffd57a;padding:2px 6px;border-radius:6px;margin-top:2px;border:1px solid #c9a86a;white-space:nowrap;font-weight:700}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
-.bottom-bar{position:fixed;bottom:0;left:0;right:0;z-index:900;background:linear-gradient(0deg,rgba(10,10,10,0.98),rgba(30,20,10,0.9));border-top:2px solid #c9a86a;padding:8px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
-.btn{padding:8px 14px;border-radius:10px;border:1px solid #c9a86a;background:linear-gradient(145deg,#3c2a14,#1a1207);color:#f5d89a;cursor:pointer;font-size:11px;font-weight:700}.btn-big{background:linear-gradient(90deg,#c9a86a,#8c6a3a);color:#1a1207;padding:10px 18px;font-size:13px;font-weight:900;border:2px solid #ffd57a}.btn-war{background:linear-gradient(90deg,#8a1a1a,#ff3333);color:#fff;border:2px solid #ffaaaa}
-.modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2000;background:linear-gradient(145deg,#211a0f,#1a1207);border:2px solid #c9a86a;border-radius:16px;padding:16px;width:90%;max-width:380px;display:none}.modal.show{display:block}
-.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(26,18,7,0.95);border:1px solid #c9a86a;padding:10px 18px;border-radius:12px;color:#ffd57a;z-index:3000;display:none;font-size:12px;font-weight:700}
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>الخلافة - هيكل منظم</title><style>@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap');*{margin:0;padding:0;box-sizing:border-box}body{font-family:Cairo;background:#0f0f0f;color:#fff;overflow:hidden;height:100vh}.top{position:fixed;top:0;left:0;right:0;height:50px;background:#1a1a1a;border-bottom:2px solid #c9a86a;display:flex;justify-content:space-between;align-items:center;padding:0 10px;z-index:1000}.view{position:absolute;top:50px;bottom:60px;left:0;right:0;display:none;overflow:auto;padding:15px}.view.active{display:block}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:500px;margin:0 auto}.card{background:linear-gradient(145deg,#2a2014,#1a1207);border:2px solid #5a4a3a;border-radius:16px;padding:15px;text-align:center;cursor:pointer;position:relative;min-height:110px;display:flex;flex-direction:column;align-items:center;justify-content:center}.card:hover{border-color:#ffd57a;transform:translateY(-3px)}.card.main{grid-column:span 3;background:linear-gradient(145deg,#3a2a14,#2a1a0a);border-color:#c9a86a;min-height:140px}.icon-ring{position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:28px;height:28px;background:#000;border:2px solid #c9a86a;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px}.lvl{position:absolute;bottom:6px;right:8px;background:#c9a86a;color:#000;font-size:9px;padding:2px 6px;border-radius:10px;font-weight:900}.panel{position:fixed;bottom:60px;left:0;right:0;background:#1a1207;border-top:2px solid #c9a86a;border-radius:20px 20px 0 0;padding:15px;display:none;z-index:800}.panel.show{display:block}.tabs{display:flex;gap:6px;margin:10px 0}.tab{flex:1;padding:8px;background:#2a2a2a;border:1px solid #444;border-radius:8px;text-align:center;font-size:11px;cursor:pointer}.tab.active{background:#c9a86a;color:#000;border-color:#ffd57a;font-weight:700}.res-row{display:flex;gap:6px;margin:10px 0}.res-item{background:#2a2014;border:1px solid #5a4a3a;padding:6px 10px;border-radius:8px;font-size:11px;flex:1;text-align:center}.btn{width:100%;padding:12px;background:linear-gradient(90deg,#c9a86a,#8c6a3a);color:#000;border:none;border-radius:12px;font-weight:900;font-size:14px;cursor:pointer;margin-top:10px}.bottom{position:fixed;bottom:0;left:0;right:0;height:60px;background:#1a1207;border-top:2px solid #c9a86a;display:flex;justify-content:space-around;align-items:center;z-index:900}.b-btn{flex:1;text-align:center;font-size:10px;color:#8a7a5a;cursor:pointer}.b-btn.active{color:#ffd57a}.world-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:600px;margin:0 auto}.enemy{background:#2a1a1a;border:2px solid #5a3a3a;border-radius:12px;padding:12px;text-align:center;cursor:pointer}.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:#1a1207;border:1px solid #c9a86a;padding:10px 16px;border-radius:10px;display:none;z-index:2000;font-size:12px}
 </style></head><body>
-<header><div class="logo">⚔️ طارق Lv <span id="lvl">1</span> - <span id="viewName">القلعة</span></div><div class="res-bar"><div class="res">🌾 <b id="food">1500</b></div><div class="res">🪵 <b id="wood">1500</b></div><div class="res">⛏️ <b id="iron">800</b></div><div class="res">🔮 <b id="crystal">300</b></div></div></header>
-<div id="castleView" class="view active"><div class="scene-wrap"><img class="scene-img" src="IMG-20261018-WA0158.jpg">
-<div class="hotspot" style="left:42%;top:52%;width:22%;height:18%" onclick="openB('arena')"><div class="h-icon">⚔️</div><div class="h-label">ساحة التدريب</div></div>
-<div class="hotspot" style="left:62%;top:10%;width:30%;height:28%" onclick="openB('palace')"><div class="h-icon">👑</div><div class="h-label">القصر الملكي</div></div>
-<div class="hotspot" style="left:72%;top:42%;width:12%;height:10%" onclick="openB('hospital')"><div class="h-icon">🏥</div><div class="h-label">مستشفى</div></div>
-<div class="hotspot" style="left:20%;top:38%;width:20%;height:20%" onclick="openB('barracks')"><div class="h-icon">🛡️</div><div class="h-label">تكنة</div></div>
-<div class="hotspot" style="left:55%;top:70%;width:18%;height:12%" onclick="openB('farm')"><div class="h-icon">🌾</div><div class="h-label">مزارع</div></div>
-<div class="hotspot" style="left:5%;top:65%;width:20%;height:15%" onclick="openB('workshop')"><div class="h-icon">🔨</div><div class="h-label">ورشة</div></div>
-</div><div class="bottom-bar"><button class="btn btn-big" onclick="goWorld()">🌲 خروج للأرض 🚪</button><button class="btn btn-war" onclick="openB('war')">⚔️ احتلال</button><button class="btn" onclick="upgrade()">⬆️ ترقية</button></div></div>
-<div id="worldView" class="view"><div class="scene-wrap"><img class="scene-img" src="IMG-20261018-WA3419.jpg">
-<div class="hotspot" style="left:38%;top:35%;width:14%;height:10%;border-color:#ff444488;background:rgba(255,68,68,0.15)" onclick="attack('عدو 1')"><div class="h-icon">🏰</div><div class="h-label">عدو Lv5</div></div>
-<div class="hotspot" style="left:62%;top:36%;width:14%;height:10%;border-color:#ff444488;background:rgba(255,68,68,0.15)" onclick="attack('عدو 2')"><div class="h-icon">🏰</div><div class="h-label">عدو Lv8</div></div>
-<div class="hotspot" style="left:68%;top:68%;width:14%;height:10%;border-color:#ffd57a;background:rgba(255,213,122,0.2)" onclick="attack('جبل المضيق')"><div class="h-icon">🏯</div><div class="h-label">جبل المضيق</div></div>
-<div class="hotspot" style="left:8%;top:40%;width:16%;height:8%" onclick="collect('wood')"><div class="h-icon">🪵</div><div class="h-label">خشب</div></div>
-<div class="hotspot" style="left:6%;top:50%;width:16%;height:12%" onclick="collect('food')"><div class="h-icon">🌾</div><div class="h-label">قمح</div></div>
-<div class="hotspot" style="left:22%;top:55%;width:14%;height:10%" onclick="collect('iron')"><div class="h-icon">⛏️</div><div class="h-label">حديد</div></div>
-<div class="hotspot" style="left:32%;top:62%;width:24%;height:18%;border-color:#aa00ff;background:rgba(170,0,255,0.15)" onclick="attack('كهف الوحوش')"><div class="h-icon">👹</div><div class="h-label">كهف وحوش</div></div>
-<div class="hotspot" style="left:2%;top:82%;width:14%;height:10%;border-color:#00ff88;background:rgba(0,255,136,0.2)" onclick="goCastle()"><div class="h-icon">⭐</div><div class="h-label">قلعتك</div></div>
-</div><div class="bottom-bar"><button class="btn btn-big" onclick="goCastle()">🏰 رجوع للقلعة</button><button class="btn" onclick="collectAll()">🌾 جمع الكل</button><button class="btn btn-war" onclick="attack('عدو')">⚔️ هجوم</button></div></div>
-<div class="modal" id="modal"><h3 id="mTitle" style="color:#ffd57a"></h3><div id="mBody" style="margin:12px 0;font-size:12px"></div><div style="display:flex;gap:8px"><button class="btn btn-big" onclick="doAction()">⬆️ ترقية</button><button class="btn" onclick="closeM()">إغلاق</button></div></div>
+<div class="top"><div>⚔️ طارق Lv40</div><div style="display:flex;gap:6px"><span>🌾1M</span><span>🪵1.6M</span><span>💰137K</span></div></div>
+<div id="castle" class="view active">
+<div style="text-align:center;margin-bottom:15px;color:#c9a86a">🏰 داخل القلعة - منظم</div>
+<div class="grid">
+<div class="card main" onclick="openB('القصر الملكي',24)"><div class="icon-ring">👑</div>👑<br>القصر الملكي<div class="lvl">Lv24</div></div>
+<div class="card" onclick="openB('الثكنة',20)"><div class="icon-ring">⚔️</div>🛡️<br>الثكنة<div class="lvl">Lv20</div></div>
+<div class="card" onclick="openB('الورشة',19)"><div class="icon-ring">🔨</div>🔨<br>الورشة<div class="lvl">Lv19</div></div>
+<div class="card" onclick="openB('المستشفى',17)"><div class="icon-ring">💚</div>🏥<br>المستشفى<div class="lvl">Lv17</div></div>
+<div class="card" onclick="openB('المزرعة',18)"><div class="icon-ring">🌾</div>🌾<br>المزرعة<div class="lvl">Lv18</div></div>
+<div class="card" onclick="openB('الإسطبل',15)"><div class="icon-ring">🐴</div>🐴<br>الإسطبل<div class="lvl">Lv15</div></div>
+<div class="card" onclick="openB('الرماة',16)"><div class="icon-ring">🏹</div>🏹<br>الرماة<div class="lvl">Lv16</div></div>
+</div>
+<div style="text-align:center;margin-top:15px"><button class="btn" style="max-width:300px" onclick="goWorld()">🌍 خروج إلى الأرض</button></div>
+</div>
+<div id="world" class="view">
+<div style="text-align:center;margin-bottom:15px;color:#5a8a3a">🌍 الأرض الخارجية - منظمة</div>
+<div class="world-grid">
+<div class="enemy" onclick="attack('عدو 1')">🏰<br>عدو Lv5<br><small>X:596 Y:247</small></div>
+<div class="enemy" onclick="attack('عدو 2')">🏰<br>عدو Lv8<br><small>X:597 Y:248</small></div>
+<div class="enemy" onclick="attack('جبل')">🏯<br>جبل المضيق<br><small>X:621 Y:236</small></div>
+<div class="enemy" onclick="toast('🌲 خشب')">🌲<br>غابة<br><small>موارد</small></div>
+<div class="enemy" onclick="toast('🐉 تنين')">🐉<br>تنين Lv17<br><small>وحش</small></div>
+<div class="enemy" onclick="toast('🐎 حصان')">🐎<br>حصان بري<br><small>Lv1</small></div>
+<div class="enemy" onclick="toast('⛺ خيمة')">⛺<br>معسكر<br><small>مهجور</small></div>
+<div class="enemy" style="border-color:#00ff88" onclick="goCastle()">⭐<br>قلعتك<br><small>X:596 Y:247</small></div>
+</div>
+<div style="margin-top:20px;background:#1a1207;border:1px solid #c9a86a;border-radius:12px;padding:12px"><div style="color:#ffd57a;font-weight:700;margin-bottom:8px">🏆 الأحداث والمنافسة</div><div style="font-size:11px;line-height:1.8">• فتح الأندلس: طنجة - 2س متبقية<br>• ترتيب 1: طارق - 18M قوة<br>• الجائزة: 10,000 جوهرة + لقب أمير</div></div>
+</div>
+<div class="panel" id="panel"><div style="display:flex;justify-content:space-between"><h3 id="pName" style="color:#ffd57a">القصر</h3><span onclick="closeP()" style="cursor:pointer">✕</span></div><div id="pLevel" style="font-size:11px;color:#aaa;margin:5px 0">المستوى 24</div><div class="tabs"><div class="tab active" onclick="setTab(this,'معلومات')">معلومات</div><div class="tab" onclick="setTab(this,'ترقية')">ترقية</div><div class="tab" onclick="setTab(this,'تدريب')">تدريب</div></div><div class="res-row"><div class="res-item">🌾 1.3M</div><div class="res-item">🪵 5.7M</div><div class="res-item">⛏️ 1.5M</div><div class="res-item">💎 708</div></div><button class="btn" onclick="upgrade()">⬆️ ترقية إلى المستوى التالي - 02:00:00</button></div>
+<div class="bottom"><div class="b-btn active" onclick="goCastle()">🏰<br>القلعة</div><div class="b-btn" onclick="goWorld()">🌍<br>الأرض</div><div class="b-btn" onclick="toast('🏆 الأحداث')">🏆<br>الأحداث</div><div class="b-btn" onclick="toast('🎒 الحقيبة')">🎒<br>الحقيبة</div></div>
 <div class="toast" id="toast"></div>
 <script>
-let state=JSON.parse(localStorage.getItem('tariq_final')||'null')||{level:1,food:1500,wood:1500,iron:800,crystal:300,xp:0,buildings:{}};
-let cur=null;function save(){localStorage.setItem('tariq_final',JSON.stringify(state));document.getElementById('food').textContent=state.food;document.getElementById('wood').textContent=state.wood;document.getElementById('iron').textContent=state.iron;document.getElementById('crystal').textContent=state.crystal;document.getElementById('lvl').textContent=state.level;}
-function toast(m){let t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2500);}
-function goCastle(){document.getElementById('castleView').classList.add('active');document.getElementById('worldView').classList.remove('active');document.getElementById('viewName').textContent='القلعة';}
-function goWorld(){document.getElementById('castleView').classList.remove('active');document.getElementById('worldView').classList.add('active');document.getElementById('viewName').textContent='الأرض الخضراء';toast('خرجت للأرض! 🌲 مثل الفيديو!');}
-function upgrade(){if(state.food<500){toast('غير كافي!');return;}state.food-=500;state.wood-=500;state.level++;state.crystal+=20;save();toast('🏰 ترقية! Lv '+state.level);}
-function openB(id){cur=id;let m=document.getElementById('modal');m.classList.add('show');let d={arena:{n:'ساحة التدريب',i:'⚔️',t:'هنا تدرب جيشك! الساحة الدائرية الكبيرة في الوسط مثل الفيديو.'},palace:{n:'القصر الملكي',i:'👑',t:'القصر بقباب خضراء فوق الجبل - مثل الفيديو!'},hospital:{n:'المستشفى',i:'🏥',t:'يعالج الجرحى.'},barracks:{n:'التكنة',i:'🛡️',t:'تدريب المشاة.'},farm:{n:'المزارع',i:'🌾',t:'تنتج قمح.'},workshop:{n:'الورشة',i:'🔨',t:'صناعة الأسلحة.'},war:{n:'⚔️ احتلال المدن - فكرتك',i:'🏯',t:'طنجة، قرطبة، اشبيلية، غرناطة، جبل المضيق - كل التحالفات جنب المدينة، اللي يشد 50% ويصمد 180ث يفوز!'}}[id]||{n:id,i:'🏰',t:'قيد التطوير'};document.getElementById('mTitle').textContent=d.i+' '+d.n;document.getElementById('mBody').textContent=d.t;}
-function closeM(){document.getElementById('modal').classList.remove('show');}function doAction(){if(cur==='war'){closeM();goWorld();return;}if(state.food<300){toast('غير كافي!');return;}state.food-=300;state.buildings[cur]=(state.buildings[cur]||1)+1;save();toast('⬆️ ترقية! Lv '+state.buildings[cur]);closeM();}
-function attack(name){toast('⚔️ هجوم على '+name+'!');setTimeout(()=>{state.food+=800;state.crystal+=20;save();toast('🏆 انتصار! +800🌾 +20🔮');},1200);}
-function collect(type){let g={food:120,wood:120,iron:80}[type]||50;state[type]+=g;save();toast('+'+g+' '+type);}function collectAll(){state.food+=500;state.wood+=400;state.iron+=200;save();toast('🌾 جمعت الكل!');}
-save();
+function openB(n,l){document.getElementById('pName').textContent=n;document.getElementById('pLevel').textContent='المستوى الحالي: '+l+' | القادم: '+(l+1);document.getElementById('panel').classList.add('show');}
+function closeP(){document.getElementById('panel').classList.remove('show');}
+function setTab(el,t){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));el.classList.add('active');toast(t+' - '+document.getElementById('pName').textContent);}
+function upgrade(){toast('⬆️ تمت الترقية!');closeP();}
+function goWorld(){document.getElementById('castle').classList.remove('active');document.getElementById('world').classList.add('active');document.querySelectorAll('.b-btn').forEach((b,i)=>{b.classList.toggle('active',i==1)});toast('🌍 خرجت للأرض');}
+function goCastle(){document.getElementById('world').classList.remove('active');document.getElementById('castle').classList.add('active');document.querySelectorAll('.b-btn').forEach((b,i)=>{b.classList.toggle('active',i==0)});closeP();}
+function attack(n){toast('⚔️ هجوم على '+n+'!');}
+function toast(m){let t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2000);}
 </script></body></html>
