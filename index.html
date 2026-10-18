@@ -2,49 +2,46 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>عرش الخلافة</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap');
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
-body{background:#0a1430;color:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:10px}
-.map{position:relative;width:100%;max-width:400px;height:520px;background:radial-gradient(#1a2a6a,#0a1430);border-radius:20px;margin:10px 0}
-.city{position:absolute;width:110px;height:110px;border-radius:50%;background:#1e2a5a;display:flex;flex-direction:column;justify-content:center;align-items:center;border:4px solid;cursor:pointer}
-.city.active{border-color:#00ff88;box-shadow:0 0 20px #00ff88}
-.city.enemy{border-color:#ff4444}.city.neutral{border-color:#ffaa00}.city.strait{border-color:#44ddff}
-#tangier{top:10px;left:10px}#ceuta{top:10px;right:10px}#toledo{top:150px;left:10px}#strait{top:170px;right:10px}
-#seville{top:280px;left:10px}#granada{bottom:10px;left:30px}#cordoba{bottom:10px;right:30px}
-.center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:200px;height:120px;background:linear-gradient(#ffcc33,#ff9900);border-radius:20px;display:flex;flex-direction:column;justify-content:center;align-items:center;color:#3d2200;font-weight:900;font-size:22px;cursor:pointer;box-shadow:0 5px 0 #aa6600}
-.stats{background:#111a3a;width:100%;max-width:400px;padding:12px;border-radius:15px;display:flex;justify-content:space-around;margin:10px 0;font-size:13px}
-.controls{display:flex;gap:8px;width:100%;max-width:400px}
-.btn{flex:1;padding:16px;border-radius:15px;text-align:center;font-weight:900;cursor:pointer;font-size:16px}
-#b1{background:linear-gradient(#ffcc33,#ff9900);color:#3d2200}#b2{background:linear-gradient(#22ff88,#22aa44)}#b3{background:linear-gradient(#ff5555,#cc2222)}
-#online{margin:5px;color:#22ff88;font-size:13px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif;-webkit-tap-highlight-color:transparent}
+body{background:#0a1430;color:#fff;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+.top{padding:8px;text-align:center;background:#111a3a;font-size:14px;color:#22ff88}
+.map{flex:1;position:relative;background:radial-gradient(#1a2a6a,#0a1430);padding:10px;overflow:hidden}
+.city{position:absolute;width:95px;height:95px;border-radius:50%;background:#1e2a5a;display:flex;flex-direction:column;justify-content:center;align-items:center;border:3px solid;font-size:13px;font-weight:700;cursor:pointer;transition:0.2s}
+.city:active{transform:scale(0.9)}
+#tangier{top:5%;left:5%;border-color:#fff}#ceuta{top:5%;right:5%;border-color:#ff4444}
+#toledo{top:32%;left:5%;border-color:#ffaa00;box-shadow:0 0 15px #ffaa00}#strait{top:32%;right:5%;border-color:#44ddff}
+#seville{top:54%;left:5%;border-color:#ffaa00}#granada{bottom:15%;left:10%;border-color:#ffaa00}#cordoba{bottom:15%;right:10%;border-color:#ffaa00}
+.center{position:absolute;top:46%;left:50%;transform:translate(-50%,-50%);width:160px;padding:15px;background:linear-gradient(#ffcc33,#ff9900);border-radius:18px;text-align:center;color:#3d2200;font-weight:900;font-size:18px;cursor:pointer;box-shadow:0 4px 0 #aa6600;z-index:5}
+.center:active{transform:translate(-50%,-48%) scale(0.95)}
+.info{text-align:center;padding:6px;font-size:12px;color:#88aaff;background:#0a1430}
+.stats{display:flex;justify-content:space-around;background:#111a3a;padding:10px;margin:0 10px;border-radius:12px;font-size:12px}
+.controls{display:flex;gap:6px;padding:8px;background:#0a1430;padding-bottom:15px}
+.btn{flex:1;padding:14px 5px;border-radius:14px;text-align:center;font-weight:900;font-size:15px;cursor:pointer;user-select:none}
+.btn:active{transform:scale(0.92)}
+#b1{background:linear-gradient(#ffcc33,#ff9900);color:#3d2200}#b2{background:linear-gradient(#22ff88,#22cc66);color:#003311}#b3{background:linear-gradient(#ff5555,#cc2222);color:#fff}
 </style>
 </head>
 <body>
-<div id="online">🟢 عرش الخلافة - متصل: 1 - 🟢 خدامة 100%</div>
+<div class="top">🏰 عرش الخلافة - خدامة 100% - ✅</div>
 <div class="map">
-<div id="tangier" class="city active" onclick="selectCity('Tangier')">🏰<br>Tangier</div>
-<div id="ceuta" class="city enemy" onclick="selectCity('Ceuta')">🏰<br>Ceuta</div>
-<div id="toledo" class="city neutral" onclick="selectCity('Toledo')">🏰<br>Toledo</div>
-<div id="strait" class="city strait" onclick="selectCity('Strait')">🌊<br>Strait</div>
-<div id="seville" class="city neutral" onclick="selectCity('Seville')">🏰<br>Seville</div>
-<div id="granada" class="city neutral" onclick="selectCity('Granada')">🕌<br>Granada</div>
-<div id="cordoba" class="city neutral" onclick="selectCity('Cordoba')">🕌<br>Cordoba</div>
-<div class="center" onclick="enterCastle()">🏰<br>دخول القلعة</div>
+<div id="tangier" class="city" onclick="selectCity('طنجة')">🏰<br>Tangier</div>
+<div id="ceuta" class="city" onclick="selectCity('سبتة')">🏰<br>Ceuta</div>
+<div id="toledo" class="city" onclick="selectCity('طليطلة')">🏰<br>Toledo</div>
+<div id="strait" class="city" onclick="selectCity('المضيق')">🌊<br>Strait</div>
+<div id="seville" class="city" onclick="selectCity('إشبيلية')">🏰<br>Seville</div>
+<div id="granada" class="city" onclick="selectCity('غرناطة')">🕌<br>Granada</div>
+<div id="cordoba" class="city" onclick="selectCity('قرطبة')">🕌<br>Cordoba</div>
+<div class="center" onclick="enterCastle()">🏰 دخول<br>القلعة</div>
 </div>
-<p style="color:#88aaff;font-size:13px;margin:5px">اختر مدينة للتحرك أو اجمع الموارد قبل الدخول</p>
-<div class="stats"><span>⭐ المستوى: <b id="lvl">7</b></span><span>💎 النقاط: <b id="pts">1240</b></span><span>🪖 الجنود: <b id="sold">42</b></span></div>
-<div class="controls"><div id="b1" class="btn" onclick="enterCastle()">دخول<br>القلعة</div><div id="b2" class="btn" onclick="collect()">جمع</div><div id="b3" class="btn" onclick="chase()">مطاردة</div></div>
-
+<div class="info">📍 المدينة الحالية: <b id="currentCity" style="color:#ffcc33">طنجة</b> - اختر مدينة أو اجمع الموارد</div>
+<div class="stats"><span>⭐ <b id="lvl">7</b> المستوى</span><span>💎 <b id="pts">1240</b> النقاط</span><span>🪖 <b id="sold">42</b> الجنود</span></div>
+<div class="controls"><div id="b3" class="btn" onclick="chase()">⚔️ مطاردة</div><div id="b2" class="btn" onclick="collect()">💎 جمع</div><div id="b1" class="btn" onclick="enterCastle()">🏰 دخول</div></div>
 <script>
-let current='Tangier';
-let points=1240, soldiers=42, level=7;
-function selectCity(name){ current=name; document.querySelectorAll('.city').forEach(c=>c.classList.remove('active')); event.currentTarget.classList.add('active'); alert('تم اختيار: '+name+'\nدابا تقدر تدير مطاردة أو دخول القلعة!'); }
-function enterCastle(){ points+=50; document.getElementById('pts').innerText=points; alert('🏰 دخلت لقلعة '+current+'!\n+50 نقطة!\nالنقاط ديالك: '+points); }
-function collect(){ points+=20; soldiers+=2; document.getElementById('pts').innerText=points; document.getElementById('sold').innerText=soldiers; alert('💎 جمعت الموارد من '+current+'!\n+20 نقطة و +2 جنود'); }
-function chase(){ if(soldiers<5){ alert('❌ ما عندكش جنود كافيين! جمع الموارد أولا'); return; } soldiers-=5; points+=100; level++; document.getElementById('sold').innerText=soldiers; document.getElementById('pts').innerText=points; document.getElementById('lvl').innerText=level; alert('⚔️ مطاردة ناجحة من '+current+' إلى سبتة!\nربحتي 100 نقطة!\nالمستوى ديالك ولا: '+level); }
-</script>
-</body>
-</html>
+let pts=parseInt(localStorage.getItem('pts')||1240), sold=parseInt(localStorage.getItem('sold')||42), lvl=parseInt(localStorage.getItem('lvl')||7), city='طنجة';
+document.getElementById('pts').innerText=pts; document.getElementById('sold').innerText=sold; document.getElementById('lvl').innerText=lvl;
+function save(){ localStorage.setItem('pts',pts); localStorage.setItem('sold',sold); localStorage.setItem('lvl',lvl); document.getElementById('pts').innerText=pts; document.getElementById('sold').innerText=sold; document.getElementById('lvl').innerText=lvl; }
+function selectCity(name){ city=name; document.getElementById('currentCity').innerText=name; document.querySelectorAll('.city').forEach(c=>c
