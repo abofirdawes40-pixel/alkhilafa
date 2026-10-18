@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>طارق - فتح الأندلس ⚔️</title>
+<style>
+body{margin:0;background:#0f172a;color:#fff;font-family:system-ui;text-align:center;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+h1{font-size:2.5rem;margin:10px;color:#fbbf24;text-shadow:0 0 20px #f59e0b}
+.card{background:#1e293b;padding:30px;border-radius:20px;box-shadow:0 10px 30px #0008;max-width:350px;width:90%}
+button{background:#f59e0b;color:#000;border:none;padding:15px 30px;font-size:1.3rem;border-radius:12px;font-weight:bold;cursor:pointer;margin-top:20px;width:100%}
+button:active{transform:scale(0.95)}
+#game{display:none}
+.grid{display:grid;grid-template-columns:repeat(3,80px);gap:10px;justify-content:center;margin:20px 0}
+.cell{width:80px;height:80px;background:#334155;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:2rem;cursor:pointer}
+.score{font-size:1.2rem;margin:10px;color:#94a3b8}
+</style>
+</head>
+<body>
+<div id="menu" class="card">
+<h1>⚔️ طارق<br>فتح الأندلس</h1>
+<p>قُد جيش طارق بن زياد و افتح المدن!</p>
+<div class="score">الفتوحات: <span id="wins">0</span></div>
+<button onclick="startGame()">ابدأ الفتح 🚀</button>
+</div>
+
+<div id="game" class="card">
+<h2>معركة طريف ⚔️</h2>
+<div class="score">دورك: <span id="turn">⚔️</span></div>
+<div class="grid" id="grid"></div>
+<button onclick="resetGame()">إعادة المعركة</button>
+<button onclick="showMenu()" style="background:#334155;color:#fff">القائمة</button>
+</div>
+
+<script>
+let board=["","","","","","","","",""];
+let current="X";
+let wins=parseInt(localStorage.getItem("tariq_wins")||0);
+document.getElementById("wins").innerText=wins;
+function startGame(){document.getElementById("menu").style.display="none";document.getElementById("game").style.display="block";createGrid()}
+function showMenu(){document.getElementById("game").style.display="none";document.getElementById("menu").style.display="block";}
+function createGrid(){const g=document.getElementById("grid");g.innerHTML="";board=["","","","","","","","",""];for(let i=0;i<9;i++){const d=document.createElement("div");d.className="cell";d.onclick=()=>move(i,d);g.appendChild(d)}}
+function move(i,el){if(board[i]!==""||checkWin())return;board[i]=current;el.innerText=current==="X"?"⚔️":"🛡️";if(checkWin()){wins++;localStorage.setItem("tariq_wins",wins);document.getElementById("wins").innerText=wins;setTimeout(()=>{alert("الله أكبر! تم الفتح ⚔️🔥");createGrid()},200)}else if(board.every(c=>c!=="")){setTimeout(()=>{alert("تعادل! استعد للمعركة");createGrid()},200)}else{current=current==="X"?"O":"X";document.getElementById("turn").innerText=current==="X"?"⚔️":"🛡️"}}
+function checkWin(){const w=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];return w.some(a=>board[a[0]]&&board[a[0]]===board[a[1]]&&board[a[0]]===board[a[2]])}
+function resetGame(){createGrid()}
+</script>
+</body>
+</html>
