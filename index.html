@@ -1,43 +1,53 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>الخلافة - هيكل منظم</title><style>@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap');*{margin:0;padding:0;box-sizing:border-box}body{font-family:Cairo;background:#0f0f0f;color:#fff;overflow:hidden;height:100vh}.top{position:fixed;top:0;left:0;right:0;height:50px;background:#1a1a1a;border-bottom:2px solid #c9a86a;display:flex;justify-content:space-between;align-items:center;padding:0 10px;z-index:1000}.view{position:absolute;top:50px;bottom:60px;left:0;right:0;display:none;overflow:auto;padding:15px}.view.active{display:block}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:500px;margin:0 auto}.card{background:linear-gradient(145deg,#2a2014,#1a1207);border:2px solid #5a4a3a;border-radius:16px;padding:15px;text-align:center;cursor:pointer;position:relative;min-height:110px;display:flex;flex-direction:column;align-items:center;justify-content:center}.card:hover{border-color:#ffd57a;transform:translateY(-3px)}.card.main{grid-column:span 3;background:linear-gradient(145deg,#3a2a14,#2a1a0a);border-color:#c9a86a;min-height:140px}.icon-ring{position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:28px;height:28px;background:#000;border:2px solid #c9a86a;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px}.lvl{position:absolute;bottom:6px;right:8px;background:#c9a86a;color:#000;font-size:9px;padding:2px 6px;border-radius:10px;font-weight:900}.panel{position:fixed;bottom:60px;left:0;right:0;background:#1a1207;border-top:2px solid #c9a86a;border-radius:20px 20px 0 0;padding:15px;display:none;z-index:800}.panel.show{display:block}.tabs{display:flex;gap:6px;margin:10px 0}.tab{flex:1;padding:8px;background:#2a2a2a;border:1px solid #444;border-radius:8px;text-align:center;font-size:11px;cursor:pointer}.tab.active{background:#c9a86a;color:#000;border-color:#ffd57a;font-weight:700}.res-row{display:flex;gap:6px;margin:10px 0}.res-item{background:#2a2014;border:1px solid #5a4a3a;padding:6px 10px;border-radius:8px;font-size:11px;flex:1;text-align:center}.btn{width:100%;padding:12px;background:linear-gradient(90deg,#c9a86a,#8c6a3a);color:#000;border:none;border-radius:12px;font-weight:900;font-size:14px;cursor:pointer;margin-top:10px}.bottom{position:fixed;bottom:0;left:0;right:0;height:60px;background:#1a1207;border-top:2px solid #c9a86a;display:flex;justify-content:space-around;align-items:center;z-index:900}.b-btn{flex:1;text-align:center;font-size:10px;color:#8a7a5a;cursor:pointer}.b-btn.active{color:#ffd57a}.world-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:600px;margin:0 auto}.enemy{background:#2a1a1a;border:2px solid #5a3a3a;border-radius:12px;padding:12px;text-align:center;cursor:pointer}.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:#1a1207;border:1px solid #c9a86a;padding:10px 16px;border-radius:10px;display:none;z-index:2000;font-size:12px}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>طارق - فتح الأندلس 2.5D</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Cairo',sans-serif;background:#050a05;color:#fff;overflow:hidden;height:100vh}
+.top{position:fixed;top:0;left:0;right:0;height:56px;background:linear-gradient(90deg,#0d1a0d,#1a2a0f);border-bottom:3px solid #1e7a1e;display:flex;justify-content:space-between;align-items:center;padding:0 10px;z-index:1000}
+.avatar{width:36px;height:36px;border-radius:10px;background:#1a5a1a;display:flex;align-items:center;justify-content:center;border:2px solid #2e8b57}
+.res{font-size:10px;background:rgba(0,0,0,0.6);padding:3px 7px;border-radius:8px;border:1px solid #2a4a2a}.res b{color:#7aff7a}
+.view{position:absolute;top:56px;bottom:64px;left:0;right:0;display:none;overflow:auto;padding:12px;background:radial-gradient(ellipse at top,#0f2a0f,#050a05)}.view.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:600px;margin:0 auto}
+.card{background:linear-gradient(145deg,#1a2f1a,#0f1f0f);border:2px solid #2a5a2a;border-radius:18px;overflow:hidden;cursor:pointer;transition:0.2s;position:relative}.card:hover{border-color:#7aff7a;transform:translateY(-4px) scale(1.02);box-shadow:0 8px 20px rgba(122,255,122,0.2)}.card.main{grid-column:span 2}
+.card img{width:100%;height:150px;object-fit:cover;display:block}.card.main img{height:200px}
+.c-info{padding:8px 10px;display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,0.6)}
+.c-name{font-size:11px;font-weight:900;color:#c8f0c8}.c-lvl{background:linear-gradient(90deg,#2e8b57,#1a7a1a);color:#fff;font-size:9px;padding:2px 8px;border-radius:20px;border:1px solid #7aff7a;font-weight:900}
+.world-grid{display:grid;grid-template-columns:1fr;gap:12px;max-width:600px;margin:0 auto}.city{background:#1a2a1a;border:2px solid #2a5a2a;border-radius:16px;overflow:hidden;cursor:pointer}
+.event{max-width:600px;margin:12px auto;background:linear-gradient(145deg,#1a2f0f,#0f1f0a);border:2px solid #c9a86a;border-radius:16px;padding:12px}
+.panel{position:fixed;bottom:64px;left:0;right:0;background:#0f1f0f;border-top:3px solid #2e8b57;border-radius:20px 20px 0 0;padding:14px;display:none;z-index:800;max-height:70%}.panel.show{display:block}
+.btn{width:100%;padding:12px;background:linear-gradient(90deg,#2e8b57,#1a7a1a);color:#fff;border:2px solid #7aff7a;border-radius:12px;font-weight:900;cursor:pointer}
+.bottom{position:fixed;bottom:0;left:0;right:0;height:64px;background:linear-gradient(0deg,#0a140a,#122412);border-top:3px solid #2e8b57;display:flex;justify-content:space-around;align-items:center;z-index:900}
+.bbtn{flex:1;display:flex;flex-direction:column;align-items:center;color:#5a7a5a;font-size:9px;font-weight:700;cursor:pointer}.bbtn.active{color:#7aff7a}.bbtn .ic{width:34px;height:34px;background:#1a2f1a;border:1px solid #2a5a2a;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:2px}
+.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:#0f1f0f;border:2px solid #2e8b57;padding:10px 18px;border-radius:12px;color:#7aff7a;display:none;z-index:3000;font-size:12px}
 </style></head><body>
-<div class="top"><div>⚔️ طارق Lv40</div><div style="display:flex;gap:6px"><span>🌾1M</span><span>🪵1.6M</span><span>💰137K</span></div></div>
-<div id="castle" class="view active">
-<div style="text-align:center;margin-bottom:15px;color:#c9a86a">🏰 داخل القلعة - منظم</div>
-<div class="grid">
-<div class="card main" onclick="openB('القصر الملكي',24)"><div class="icon-ring">👑</div>👑<br>القصر الملكي<div class="lvl">Lv24</div></div>
-<div class="card" onclick="openB('الثكنة',20)"><div class="icon-ring">⚔️</div>🛡️<br>الثكنة<div class="lvl">Lv20</div></div>
-<div class="card" onclick="openB('الورشة',19)"><div class="icon-ring">🔨</div>🔨<br>الورشة<div class="lvl">Lv19</div></div>
-<div class="card" onclick="openB('المستشفى',17)"><div class="icon-ring">💚</div>🏥<br>المستشفى<div class="lvl">Lv17</div></div>
-<div class="card" onclick="openB('المزرعة',18)"><div class="icon-ring">🌾</div>🌾<br>المزرعة<div class="lvl">Lv18</div></div>
-<div class="card" onclick="openB('الإسطبل',15)"><div class="icon-ring">🐴</div>🐴<br>الإسطبل<div class="lvl">Lv15</div></div>
-<div class="card" onclick="openB('الرماة',16)"><div class="icon-ring">🏹</div>🏹<br>الرماة<div class="lvl">Lv16</div></div>
+<div class="top"><div style="display:flex;align-items:center;gap:8px"><div class="avatar">⚔️</div><div><div style="color:#ff4444;font-weight:900;font-size:11px">⚔️ 18.7M</div><div style="font-size:8px;color:#7aff7a">طارق Lv40</div></div></div><div style="display:flex;gap:4px"><div class="res">🌾 <b>1.2M</b></div><div class="res">🪵 <b>1.6M</b></div><div class="res">💎 <b style="color:#ffd700">137K</b></div></div></div>
+<div id="v-castle" class="view active"><div class="grid">
+<div class="card main" onclick="openB('قصر الخلافة',24)"><img src="castle.png"><div class="c-info"><span class="c-name">🕌 قصر الخلافة</span><span class="c-lvl">Lv24</span></div></div>
+<div class="card" onclick="openB('إسطبل الخيول العربية',15)"><img src="stable.png"><div class="c-info"><span class="c-name">🐴 الإسطبل</span><span class="c-lvl">Lv15</span></div></div>
+<div class="card" onclick="openB('السوق الكبير',18)"><img src="market.png"><div class="c-info"><span class="c-name">🏪 السوق</span><span class="c-lvl">Lv18</span></div></div>
+<div class="card" onclick="openB('بيت الحكمة',19)"><img src="library.png"><div class="c-info"><span class="c-name">📚 بيت الحكمة</span><span class="c-lvl">Lv19</span></div></div>
+<div class="card" onclick="openB('المارستان',17)"><img src="hospital.png"><div class="c-info"><span class="c-name">🏥 المارستان</span><span class="c-lvl">Lv17</span></div></div>
+<div class="card" onclick="openB('ثكنة المجاهدين',20)"><img src="castle.png"><div class="c-info"><span class="c-name">🛡️ الثكنة</span><span class="c-lvl">Lv20</span></div></div>
+</div></div>
+<div id="v-world" class="view"><div class="world-grid">
+<div class="city" onclick="toast('⭐ قلعتك - طنجة')"><img src="world.png"><div class="c-info"><span class="c-name">🌍 خريطة الأندلس - طنجة X:596 Y:247</span></div></div>
+<div class="city" onclick="goEvent()"><img src="castle.png"><div class="c-info"><span class="c-name">⛰️ جبل طارق - حدث 42% vs 38%</span><span class="c-lvl">حدث</span></div></div>
+</div></div>
+<div id="v-events" class="view">
+<div class="event"><div style="display:flex;justify-content:space-between;color:#ffd700;font-weight:900;font-size:12px"><span>⚔️ فتح جبل طارق</span><span style="color:#ff4444">⏳ 02:14:33</span></div><div style="font-size:10px;color:#aaa;margin:6px 0">سيطر 50% واصمد 180 ثانية!</div><div style="display:flex;gap:6px;margin:8px 0"><div style="flex:1;background:#1a2a1a;padding:8px;border-radius:10px;text-align:center;border:1px solid #2e8b57"><small>تحالفك</small><br><b style="color:#7aff7a">42% سيطرة</b></div><div style="flex:1;background:#2a1a1a;padding:8px;border-radius:10px;text-align:center;border:1px solid #5a2a2a"><small>العدو</small><br><b style="color:#ff4444">38% سيطرة</b></div></div><button class="btn" onclick="toast('⚔️ انضممت للمعركة!')">⚔️ الانضمام للمعركة</button></div>
+<div class="event"><div style="color:#ffd700;font-weight:900;font-size:12px">🏆 ترتيب سيف طارق</div><div style="margin-top:8px"><div style="display:flex;justify-content:space-between;padding:8px;background:linear-gradient(90deg,#4a3a0a,#2a2000);border:1px solid #ffd700;border-radius:10px;font-size:11px"><span>1. طارق - 18.7M</span><span>👑 أمير + 10K 💎</span></div><div style="display:flex;justify-content:space-between;padding:6px;background:rgba(0,0,0,0.3);border-radius:8px;margin-top:4px;font-size:11px"><span>2. ABOoTmees - 16.2M</span><span>⚔️ 5K</span></div><div style="display:flex;justify-content:space-between;padding:6px;background:rgba(0,0,0,0.3);border-radius:8px;margin-top:4px;font-size:11px"><span>3. WARP - 15.8M</span><span>🛡️ 3K</span></div></div></div>
 </div>
-<div style="text-align:center;margin-top:15px"><button class="btn" style="max-width:300px" onclick="goWorld()">🌍 خروج إلى الأرض</button></div>
-</div>
-<div id="world" class="view">
-<div style="text-align:center;margin-bottom:15px;color:#5a8a3a">🌍 الأرض الخارجية - منظمة</div>
-<div class="world-grid">
-<div class="enemy" onclick="attack('عدو 1')">🏰<br>عدو Lv5<br><small>X:596 Y:247</small></div>
-<div class="enemy" onclick="attack('عدو 2')">🏰<br>عدو Lv8<br><small>X:597 Y:248</small></div>
-<div class="enemy" onclick="attack('جبل')">🏯<br>جبل المضيق<br><small>X:621 Y:236</small></div>
-<div class="enemy" onclick="toast('🌲 خشب')">🌲<br>غابة<br><small>موارد</small></div>
-<div class="enemy" onclick="toast('🐉 تنين')">🐉<br>تنين Lv17<br><small>وحش</small></div>
-<div class="enemy" onclick="toast('🐎 حصان')">🐎<br>حصان بري<br><small>Lv1</small></div>
-<div class="enemy" onclick="toast('⛺ خيمة')">⛺<br>معسكر<br><small>مهجور</small></div>
-<div class="enemy" style="border-color:#00ff88" onclick="goCastle()">⭐<br>قلعتك<br><small>X:596 Y:247</small></div>
-</div>
-<div style="margin-top:20px;background:#1a1207;border:1px solid #c9a86a;border-radius:12px;padding:12px"><div style="color:#ffd57a;font-weight:700;margin-bottom:8px">🏆 الأحداث والمنافسة</div><div style="font-size:11px;line-height:1.8">• فتح الأندلس: طنجة - 2س متبقية<br>• ترتيب 1: طارق - 18M قوة<br>• الجائزة: 10,000 جوهرة + لقب أمير</div></div>
-</div>
-<div class="panel" id="panel"><div style="display:flex;justify-content:space-between"><h3 id="pName" style="color:#ffd57a">القصر</h3><span onclick="closeP()" style="cursor:pointer">✕</span></div><div id="pLevel" style="font-size:11px;color:#aaa;margin:5px 0">المستوى 24</div><div class="tabs"><div class="tab active" onclick="setTab(this,'معلومات')">معلومات</div><div class="tab" onclick="setTab(this,'ترقية')">ترقية</div><div class="tab" onclick="setTab(this,'تدريب')">تدريب</div></div><div class="res-row"><div class="res-item">🌾 1.3M</div><div class="res-item">🪵 5.7M</div><div class="res-item">⛏️ 1.5M</div><div class="res-item">💎 708</div></div><button class="btn" onclick="upgrade()">⬆️ ترقية إلى المستوى التالي - 02:00:00</button></div>
-<div class="bottom"><div class="b-btn active" onclick="goCastle()">🏰<br>القلعة</div><div class="b-btn" onclick="goWorld()">🌍<br>الأرض</div><div class="b-btn" onclick="toast('🏆 الأحداث')">🏆<br>الأحداث</div><div class="b-btn" onclick="toast('🎒 الحقيبة')">🎒<br>الحقيبة</div></div>
+<div class="panel" id="panel"><div style="display:flex;justify-content:space-between"><h3 id="pName" style="color:#7aff7a">قصر الخلافة</h3><span onclick="closeP()" style="cursor:pointer">✕</span></div><div id="pLvl" style="font-size:11px;color:#aaa;margin:4px 0">Lv24 → Lv25</div><div style="display:flex;gap:6px;margin:10px 0"><div style="flex:1;background:#0f1f0f;border:1px solid #2a4a2a;padding:6px;border-radius:8px;text-align:center;font-size:10px">🌾<br><b>58K</b></div><div style="flex:1;background:#0f1f0f;border:1px solid #2a4a2a;padding:6px;border-radius:8px;text-align:center;font-size:10px">🪵<br><b>59K</b></div><div style="flex:1;background:#0f1f0f;border:1px solid #2a4a2a;padding:6px;border-radius:8px;text-align:center;font-size:10px">⛏️<br><b>58K</b></div><div style="flex:1;background:#0f1f0f;border:1px solid #2a4a2a;padding:6px;border-radius:8px;text-align:center;font-size:10px">💎<br><b>153K</b></div></div><button class="btn" onclick="doUpgrade()">⬆️ ترقية الآن - 02:00:00</button></div>
+<div class="bottom"><div class="bbtn active" onclick="go('castle')"><div class="ic">🏰</div>القلعة</div><div class="bbtn" onclick="go('world')"><div class="ic">🌍</div>الأرض</div><div class="bbtn" onclick="go('events')"><div class="ic">🏆</div>الأحداث</div><div class="bbtn" onclick="toast('🦸 الأبطال')"><div class="ic">🦸</div>الأبطال</div><div class="bbtn" onclick="toast('🎒 الحقيبة')"><div class="ic">🎒</div>الحقيبة</div></div>
 <div class="toast" id="toast"></div>
 <script>
-function openB(n,l){document.getElementById('pName').textContent=n;document.getElementById('pLevel').textContent='المستوى الحالي: '+l+' | القادم: '+(l+1);document.getElementById('panel').classList.add('show');}
-function closeP(){document.getElementById('panel').classList.remove('show');}
-function setTab(el,t){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));el.classList.add('active');toast(t+' - '+document.getElementById('pName').textContent);}
-function upgrade(){toast('⬆️ تمت الترقية!');closeP();}
-function goWorld(){document.getElementById('castle').classList.remove('active');document.getElementById('world').classList.add('active');document.querySelectorAll('.b-btn').forEach((b,i)=>{b.classList.toggle('active',i==1)});toast('🌍 خرجت للأرض');}
-function goCastle(){document.getElementById('world').classList.remove('active');document.getElementById('castle').classList.add('active');document.querySelectorAll('.b-btn').forEach((b,i)=>{b.classList.toggle('active',i==0)});closeP();}
-function attack(n){toast('⚔️ هجوم على '+n+'!');}
+let cur='قصر الخلافة',lvl=24;
 function toast(m){let t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2000);}
+function openB(n,l){cur=n;lvl=l;document.getElementById('pName').textContent=n;document.getElementById('pLvl').textContent='Lv'+l+' → Lv'+(l+1);document.getElementById('panel').classList.add('show');}
+function closeP(){document.getElementById('panel').classList.remove('show');}
+function doUpgrade(){toast('⬆️ ترقية '+cur+' إلى Lv'+(lvl+1)+'!');closeP();}
+function go(w){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.querySelectorAll('.bbtn').forEach(b=>b.classList.remove('active'));if(w=='castle'){document.getElementById('v-castle').classList.add('active');document.querySelectorAll('.bbtn')[0].classList.add('active');}if(w=='world'){document.getElementById('v-world').classList.add('active');document.querySelectorAll('.bbtn')[1].classList.add('active');}if(w=='events'){document.getElementById('v-events').classList.add('active');document.querySelectorAll('.bbtn')[2].classList.add('active');}closeP();}
+function goEvent(){go('events');toast('🏆 حدث جبل طارق!');}
 </script></body></html>
